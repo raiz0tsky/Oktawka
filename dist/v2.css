@@ -148,7 +148,7 @@ button:disabled,.primary:disabled{cursor:not-allowed}
 .phone-2 .player #now-artist{font-size:14px;color:var(--muted)!important}
 /* Bottom nav: filled pill + bold label marks the current page */
 .phone-2 .sidebar nav button{color:var(--muted)!important;font-size:13px!important;font-weight:500}
-.phone-2 .sidebar nav button .material-symbols-rounded{display:grid;place-items:center;width:56px;height:28px;border-radius:999px;margin:0 auto 2px}
+.phone-2 .sidebar nav button .material-symbols-rounded{display:block!important;width:56px!important;height:28px!important;line-height:28px!important;text-align:center!important;font-size:24px!important;border-radius:999px;margin:0 auto 2px!important}
 .phone-2 .sidebar nav button.active{color:var(--text)!important;font-weight:700;background:none!important}
 .phone-2 .sidebar nav button.active .material-symbols-rounded{background:var(--surface-hover)}
 /* Now Playing */
