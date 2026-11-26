@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {handleRadio} from '../worker/radio.mjs';
+let captured,cancelled=false;
+const request=(suffix='',headers={})=>new Request('https://oktawka.example/api/radio'+suffix,{headers});
+const mock=async(url,options)=>{captured={url,options};return new Response(new ReadableStream({start(c){c.enqueue(new Uint8Array([102,76,97,67]))},cancel(){cancelled=true}}),{headers:{'Content-Type':'audio/flac'}})};
+let response=await handleRadio(request('?station=mellow',{Authorization:'private',Cookie:'private',Range:'bytes=0-4095'}),mock);assert.equal(response.status,200);assert.equal(captured.url,'https://stream.radioparadise.com/mellow-flac');assert.equal(captured.options.headers.Authorization,undefined);assert.equal(captured.options.headers.Cookie,undefined);assert.equal(captured.options.headers.Range,'bytes=0-4095');assert.equal(captured.options.signal.aborted,false);await response.body.cancel();assert(cancelled);
+assert.equal((await handleRadio(request('?station=https://bad.example'),mock)).status,400);
+assert.equal((await handleRadio(request(),async()=>new Response('',{status:302,headers:{Location:'https://bad.example/audio'}}))).status,502);
+assert.equal((await handleRadio(request(),async()=>new Response('<html>',{headers:{'Content-Type':'text/html'}}))).status,502);
+assert.equal((await handleRadio(request(),async()=>{throw Error('offline')})).status,502);
+console.log('PASS: radio streaming, fixed station validation, header isolation, redirect/type refusal, cancellable stream, failures.');

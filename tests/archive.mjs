@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {handleArchive} from '../worker/archive.mjs';
+let called;
+const request=p=>new Request('https://oktawka.example/api/archive'+p);
+const mock=data=>async(url,opts)=>{called={url,opts};return Response.json(data)};
+let r=await handleArchive(request('?q=Artist%20OR%20collection:other'),mock({response:{docs:[{identifier:'show-1',title:'Live',creator:['Artist']}]}}));
+assert.equal(r.status,200);assert.equal((await r.json()).recordings[0].artist,'Artist');assert(called.url.startsWith('https://archive.org/advancedsearch.php?'));assert(new URL(called.url).searchParams.get('q').startsWith('collection:etree AND mediatype:etree AND format:Flac'));assert.equal(called.opts.redirect,'manual');assert(!called.opts.headers.Authorization);
+r=await handleArchive(request('?id=show-1'),mock({metadata:{collection:['etree'],title:'Live'},files:[{name:'song.flac',format:'Flac'},{name:'private.flac',format:'Flac',private:'true'},{name:'song.mp3',format:'VBR MP3'}]}));const data=await r.json();assert.equal(data.files.length,1);assert.equal(data.files[0].url,'https://archive.org/download/show-1/song.flac');
+assert.equal((await handleArchive(request('?id=show-1'),mock({metadata:{collection:['other']},files:[]}))).status,404);
+assert.equal((await handleArchive(request('?id=../bad'),mock({}))).status,400);
+assert.equal((await handleArchive(request(''),async()=>{throw Error('offline')})).status,502);
+console.log('PASS: fixed Archive catalog, query scoping, restricted collection refusal, FLAC only, failures');
+r=await handleArchive(request('?collection=open&id=album'),mock({metadata:{collection:['netlabels'],licenseurl:'https://creativecommons.org/licenses/by/4.0/'},files:[{name:'song.flac',format:'Flac'}]}));assert.equal((await r.json()).files.length,1);
+assert.equal((await handleArchive(request('?collection=open&id=album'),mock({metadata:{collection:['netlabels'],licenseurl:'https://bad.example/license'},files:[]}))).status,404);
+assert.equal((await handleArchive(request('?collection=arbitrary'),mock({}))).status,400);
+console.log('PASS: open label albums require Creative Commons license and correct collection.');

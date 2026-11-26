@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {handleLyrics} from '../worker/lyrics.mjs';
+let observed;
+const req=p=>new Request('https://mono.example/api/lyrics?'+p,{headers:{Authorization:'private',Cookie:'private'}});
+const mock=data=>async(url,options)=>{observed={url,options};return Response.json(data)};
+let response=await handleLyrics(req('title=Example&artist=Artist&album=Album&duration=200'),mock({trackName:'Example',artistName:'Artist',albumName:'Album',duration:200,syncedLyrics:'[00:01.00]Test fixture'}));let data=await response.json();assert(data.found);assert.equal(data.source,'LRCLIB');assert.equal(new URL(observed.url).origin,'https://lrclib.net');assert.equal(new URL(observed.url).pathname,'/api/get');assert.equal(observed.options.headers.Authorization,undefined);assert.equal(observed.options.headers.Cookie,undefined);assert.equal(observed.options.redirect,'manual');
+response=await handleLyrics(req('title=Example&artist=Artist&duration=200'),mock({trackName:'Example (Live)',artistName:'Artist',duration:200,plainLyrics:'Fixture'}));assert.equal((await response.json()).found,false);
+response=await handleLyrics(req('title=Example&artist=Artist&duration=200'),mock({trackName:'Example',artistName:'Artist',duration:210,plainLyrics:'Fixture'}));assert.equal((await response.json()).found,false);
+response=await handleLyrics(req('title=Example&artist=Artist'),async()=>new Response('',{status:404}));assert.equal((await response.json()).found,false);
+response=await handleLyrics(req('title=Example&artist=Artist'),mock({trackName:'Example',artistName:'Artist',instrumental:true}));assert.equal((await response.json()).instrumental,true);
+assert.equal((await handleLyrics(req('title=&artist=Artist'),mock({}))).status,400);
+assert.equal((await handleLyrics(req('title=Example&artist=Artist'),async()=>{throw Error('offline')})).status,502);
+console.log('PASS: exact lyrics lookup, source-header isolation, wrong-version/duration refusal, instrumental, missing and unavailable lyrics.');

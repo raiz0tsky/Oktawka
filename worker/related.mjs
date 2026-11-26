@@ -1,0 +1,10 @@
+// Metadata only. A related-track candidate is never an audio entitlement.
+export async function handleRelated(request,fetcher=(url,opts)=>globalThis.fetch(url,opts)){
+ const reply=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'public, max-age=600'}});
+ if(request.method!=='GET')return reply({error:'Use GET.'},405);
+ const name=(new URL(request.url).searchParams.get('artist')||'').trim();if(name.length<1||name.length>120)return reply({error:'Invalid artist name.'},400);
+ try{const get=async path=>{const r=await fetcher('https://api.deezer.com/'+path,{headers:{Accept:'application/json'},redirect:'manual',signal:AbortSignal.timeout(8000)});if(!r.ok)throw Error('Metadata unavailable');const d=await r.json();if(d.error)throw Error('Metadata unavailable');return d};
+ const found=await get('search/artist?q='+encodeURIComponent(name)+'&limit=5');const norm=s=>String(s).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^\p{L}\p{N}]/gu,'');const artist=found.data?.find(a=>norm(a.name)===norm(name)&&Number.isSafeInteger(a.id));if(!artist)return reply({tracks:[]});
+ const related=await get('artist/'+artist.id+'/related?limit=4');const peers=(related.data||[]).filter(a=>Number.isSafeInteger(a.id)&&a.id!==artist.id).slice(0,3);const results=await Promise.allSettled(peers.map(a=>get('artist/'+a.id+'/top?limit=3')));const tracks=[];for(const result of results){if(result.status!=='fulfilled')continue;for(const row of result.value.data||[]){if(!row.title||!row.artist?.name||!Number.isSafeInteger(row.id))continue;const cover=row.album?.cover_medium||'';tracks.push({id:'deezer:'+row.id,title:String(row.title).slice(0,200),artist:String(row.artist.name).slice(0,120),album:String(row.album?.title||''),artwork:/^https:\/\/[\w.-]*dzcdn.net\//.test(cover)?cover:'',duration:Number(row.duration)||0})}}return reply({tracks:tracks.slice(0,9),basedOn:artist.name});
+ }catch{return reply({error:'Related-artist metadata is unavailable. Your existing queue is unchanged.'},502)}
+}

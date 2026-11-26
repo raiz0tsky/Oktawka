@@ -1,0 +1,58 @@
+/* Small-screen shell: safe areas belong to chrome, never to track content. */
+:root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px)}
+html{scroll-padding-top:calc(90px + var(--safe-top))}body{overflow-x:clip}
+main>header{height:calc(78px + var(--safe-top));padding-top:calc(14px + var(--safe-top))}
+.content{max-width:1280px;margin-inline:auto;padding-top:32px}.title-line h1{font-size:26px}.section-heading h2{font-size:20px}
+.welcome{background:var(--surface-raised);padding:22px;min-height:0;border-radius:12px;box-shadow:none}.welcome-icon{width:56px;height:56px}.welcome h2{font-size:20px}.welcome p{margin-bottom:12px}.welcome-actions{gap:14px}
+.album-cover,.history-card img{box-shadow:none}.album-card::after{box-shadow:none}.album-grid{gap:20px 12px}
+body[data-route=home] .catalog-chips,body[data-route=home] .album-library>.section-heading p{display:none}
+body[data-route=home] .album-grid>.album-card:nth-child(n+7){display:none}
+#shelf-more{margin-left:auto;min-height:44px;padding:8px 12px;white-space:nowrap}
+body:not([data-route=home]) #shelf-more{display:none}
+#recommendations{display:flex;overflow-x:auto;gap:16px;scroll-snap-type:x proximity;padding-bottom:12px}
+#recommendations>.history-card{flex:0 0 155px;scroll-snap-align:start}
+#recent-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.album-card img,.history-card img{object-fit:cover}
+#dialog{max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 32px);overscroll-behavior:contain}
+#dialog .close{min-width:44px;min-height:44px}
+#dialog-content{overflow-wrap:anywhere}
+@supports(content-visibility:auto){.artist-discography>.album-card{content-visibility:auto;contain-intrinsic-size:180px 245px}}
+@media(min-width:601px){.sidebar{padding-top:calc(28px + var(--safe-top));padding-left:calc(16px + var(--safe-left))}.player{padding-bottom:calc(12px + var(--safe-bottom));height:calc(var(--player-size) + var(--safe-bottom))}main{margin-bottom:calc(var(--player-size) + var(--safe-bottom))}}
+@media(max-width:600px){
+ :root{--mobile-nav:64px;--mobile-player:72px}
+ main{margin:0;padding-bottom:calc(var(--mobile-nav) + var(--mobile-player) + var(--safe-bottom) + 24px);min-height:100dvh}
+ main>header{height:auto;min-height:calc(68px + var(--safe-top));padding:calc(10px + var(--safe-top)) calc(12px + var(--safe-right)) 10px calc(12px + var(--safe-left));gap:6px}
+ header .searchbox{min-width:0;padding:10px 12px}.searchbox input{font-size:16px;min-width:0}.searchbox>.material-symbols-rounded{font-size:21px}
+ .avatar,.header-action{width:44px;height:44px;min-width:44px;display:grid;place-items:center;padding:0}.breadcrumbs{display:none}
+ .content{padding:24px calc(18px + var(--safe-right)) 24px calc(18px + var(--safe-left))}.title-line{margin-bottom:24px}.title-line h1{font-size:25px}
+ .sidebar{height:calc(var(--mobile-nav) + var(--safe-bottom));padding:4px calc(8px + var(--safe-right)) calc(4px + var(--safe-bottom)) calc(8px + var(--safe-left));background:var(--surface)!important;box-sizing:border-box}
+ .sidebar nav{grid-template-columns:repeat(4,minmax(0,1fr))}.sidebar nav [data-category=open]{display:none!important}.sidebar nav button{min-height:48px}.sidebar nav button>span:not(.material-symbols-rounded){font-size:11px}
+ .player{bottom:calc(var(--mobile-nav) + var(--safe-bottom) + 6px);left:calc(8px + var(--safe-left));right:calc(8px + var(--safe-right));height:var(--mobile-player);box-shadow:none;padding:8px;gap:4px;grid-template-columns:minmax(0,1fr) 44px 44px}
+ .transport-buttons #next{display:none}.transport-buttons .play,.player #expand-player{width:44px;height:44px;padding:0;min-width:44px}
+ .now b{font-size:13px}.now .artist-link{font-size:11px!important}.now .quality-badge{max-width:100%;font-size:9px}.now .mini-art{width:42px;height:42px}.now{gap:8px}
+ #recent-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#recent-grid b{font-size:12px}#recent-grid img,#recent-grid .history-card>.material-symbols-rounded{width:48px;height:56px}
+ .welcome-icon{display:none}.welcome{padding:20px;margin-bottom:28px}.welcome h2{font-size:20px}.welcome p{font-size:13px}
+ .album-grid{gap:20px 10px;margin-inline:0}.album-card{padding:0}.album-card b{font-size:14px}.album-cover{margin-bottom:9px}.album-card small{display:none}
+ .catalog-modes button,.catalog-chips button{min-height:44px}.section-heading{align-items:center}.section-heading h2{font-size:19px}#shelf-more{font-size:12px;padding:8px}
+ #recommendations>.history-card{flex-basis:138px}#recommendations{gap:12px}
+ #dialog{width:calc(100% - var(--safe-left) - var(--safe-right) - 24px);max-width:540px;padding:24px 18px;margin:auto;max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 32px)}
+ #now-playing{height:100dvh;max-height:100dvh;padding:var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);box-sizing:border-box}
+ .np-shell{padding:12px 22px 24px}.np-header button,.np-tools button{min-height:44px;min-width:44px}.np-artwork{width:min(100%,34dvh);margin-bottom:20px}.np-track h2{font-size:23px}.np-lyrics-pane{margin-top:24px}
+ input,select,textarea{font-size:16px}.album-track-play{width:44px;height:44px}.primary{min-height:44px}.source-option{min-height:56px}
+ #match-status{bottom:calc(var(--mobile-nav) + var(--mobile-player) + var(--safe-bottom) + 18px);max-height:30dvh;overflow-y:auto;left:12px;right:12px;max-width:none}#match-status button{min-height:44px}
+ #toast{bottom:calc(var(--mobile-nav) + var(--mobile-player) + var(--safe-bottom) + 20px)}
+ main footer{margin-top:28px}footer>span{display:none}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+/* Album popup: show which row is playing, since the modal hides the mini-player on phones. */
+#album-tracks .catalog-track[aria-current] b{color:var(--accent)}
+.catalog-track[aria-current] .album-track-play{outline:2px solid var(--accent)}
+@media(max-width:600px){
+.album-library .section-heading{flex-wrap:wrap;align-items:center}
+.album-library .section-heading>div{flex-basis:100%}
+#saved-albums{max-width:none;white-space:nowrap;text-align:left;min-height:44px;font-size:12px;padding:8px 0}
+.sidebar nav [data-view=library]>span:last-child::after{font-size:11px}
+}
+/* Nothing loaded: Play still opens the file picker, but must not look like a ready track. */
+.player:not(.has-track) .transport-buttons .play{background:var(--surface-hover)!important;color:var(--subtle)!important}
+.now .quality-badge{display:inline-block!important;width:auto;max-width:100%}

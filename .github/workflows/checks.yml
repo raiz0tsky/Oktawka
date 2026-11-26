@@ -1,0 +1,20 @@
+name: Check web app
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript and playback checks
+        run: node scripts/check.mjs
+      - name: Build Worker and verify packaged assets
+        run: |
+          node scripts/build-worker.mjs
+          node tests/artifact.mjs
