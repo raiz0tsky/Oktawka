@@ -36,7 +36,7 @@ button:disabled,.primary:disabled{cursor:not-allowed}
 [data-theme=charcoal] #volume{accent-color:var(--text)}
 
 /* Phase 2: first-run Home. One focal point (the connect prompt), plain rows below. No card, no gradient. */
-#welcome.welcome{display:block!important;background:none!important;padding:8px 0 0!important;margin:0 0 32px!important;border-radius:0;box-shadow:none;max-width:640px}
+#welcome.welcome:not([hidden]){display:block!important;background:none!important;padding:8px 0 0!important;margin:0 0 32px!important;border-radius:0;box-shadow:none;max-width:640px}
 #welcome h2{font-size:clamp(28px,6vw,36px)!important;line-height:1.12;font-weight:700;letter-spacing:0;margin:0 0 12px}
 #welcome>div>p{font-size:16px!important;line-height:1.4;color:var(--muted);margin:0 0 16px}
 #welcome .welcome-actions .primary{width:100%;max-width:360px}
@@ -49,3 +49,126 @@ button:disabled,.primary:disabled{cursor:not-allowed}
 #welcome .source-option small{font-size:14px;color:var(--muted)}
 /* Desktop has Settings in the sidebar, so the header gear is a duplicate there. */
 @media(min-width:601px){#profile{display:none!important}}
+
+/* ===== Phone layout 2.0 (max 600 px). Matches Penpot "Oktawka 2.0 – Screens"; phone.js adds .phone-2 and the extra labels. ===== */
+.phone-bar,#phone-home-search,#phone-search,.phone-library,#phone-add-files{display:none}
+@media(max-width:600px){
+.phone-2 body{background:var(--bg)}
+.phone-2 main>header{display:none!important}
+.phone-2 main .content{padding:calc(var(--safe-top) + 8px) 16px 0!important}
+.phone-2 .eyebrow,.phone-2 .section-heading p,.phone-2 .section-heading .eyebrow,.phone-2 .category-heading,.phone-2 .catalog-attribution,.phone-2 .content>footer,.phone-2 .title-line .date{display:none!important}
+/* Page titles: Display 32/36 */
+.phone-2 .title-line{display:flex;align-items:center;justify-content:space-between;min-height:56px;margin:0 0 16px!important;padding:0!important}
+.phone-2 #page-title{font-size:32px!important;line-height:36px;font-weight:700;letter-spacing:0;margin:0}
+.phone-2 body[data-route=home] .title-line{display:none!important}
+/* Home app bar */
+.phone-2 body[data-route=home] .phone-bar{display:flex;align-items:center;justify-content:space-between;min-height:56px;margin:0 0 8px}
+.phone-bar .wordmark{font-size:24px;font-weight:700}
+.phone-quiet,.phone-secondary{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 16px;border-radius:6px;font-size:16px;font-weight:600;color:var(--text);background:none;border:0}
+.phone-quiet:active{background:var(--divider,#33373d)}
+.phone-secondary{border:1px solid var(--line)!important}
+.phone-quiet .material-symbols-rounded,.phone-secondary .material-symbols-rounded{font-size:20px}
+/* Fields: visible label above, 48 px field */
+.phone-label{display:block;font-size:14px;font-weight:500;color:var(--muted);margin:0 0 8px}
+.phone-input,.phone-2 #phone-search .searchbox{display:flex!important;align-items:center;gap:12px;height:48px;padding:0 12px!important;border-radius:6px!important;background:var(--surface-hover)!important;border:1px solid var(--line)!important;box-shadow:none!important;width:100%!important;max-width:none!important;margin:0!important}
+.phone-input{color:var(--muted);font-size:16px}
+.phone-2 #phone-search .searchbox input{font-size:16px!important;min-height:44px;background:none;border:0;flex:1;color:var(--text)}
+.phone-2 #phone-search .searchbox:focus-within{border:2px solid var(--text)!important}
+.phone-2 #phone-search .searchbox kbd{display:none}
+.phone-2 body[data-route=home] #phone-home-search{display:block;width:100%;text-align:left;background:none;border:0;padding:0;margin:0 0 24px}
+.phone-2 body[data-route=home]:has(#welcome:not([hidden])) #phone-home-search{display:none}
+.phone-2 body[data-route=search] #phone-search{display:block;margin:0 0 16px}
+/* Section headings: Heading 18 */
+.phone-2 .section-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px!important;padding:0!important}
+.phone-2 .section-heading h2,.phone-2 .section-heading h3{font-size:18px!important;line-height:24px;font-weight:600;letter-spacing:0;margin:0!important}
+.phone-2 #home-main section{margin-bottom:32px!important}
+/* Album grid: 2 columns, 8 px art radius, 2-line titles */
+.phone-2 .album-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:24px 16px!important;margin:0!important}
+.phone-2 .album-card{padding:0!important;background:none!important;text-align:left}
+.phone-2 .album-card::after{display:none!important}
+.phone-2 .album-cover{border-radius:8px!important;box-shadow:none!important;background:var(--surface-hover)!important;margin:0 0 8px!important}
+.phone-2 .album-cover img{border-radius:8px!important}
+.phone-2 .album-card b{font-size:16px!important;line-height:20px;font-weight:600;white-space:normal!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.phone-2 .album-card>span{font-size:14px!important;color:var(--muted)!important;margin:4px 0 0!important}
+.phone-2 .album-card small{display:none!important}
+/* Segmented control */
+.phone-2 .catalog-modes{display:inline-flex!important;gap:4px;padding:4px;border-radius:6px;background:var(--surface-raised)!important;margin:0 0 16px!important}
+.phone-2 .catalog-modes button{min-height:40px!important;padding:0 20px!important;border-radius:4px!important;border:0!important;background:none!important;color:var(--muted)!important;font-size:14px!important;font-weight:500}
+.phone-2 .catalog-modes button[aria-pressed=true]{background:var(--text)!important;color:var(--bg)!important;font-weight:700}
+.phone-2 #catalog-status{font-size:14px;color:var(--muted);margin:0 0 16px}
+/* Rows (settings-row component): 64 px, icon, title + value, chevron */
+.phone-rows{display:flex;flex-direction:column}
+.phone-row,.phone-2 .source-option{display:flex!important;align-items:center;gap:16px;width:100%;min-height:64px;padding:8px 8px 8px 4px!important;background:none!important;border:0!important;border-radius:6px!important;text-align:left;color:var(--text)!important}
+.phone-row:active,.phone-2 .source-option:active{background:var(--surface-hover)!important}
+.phone-row>span:nth-child(2),.phone-2 .source-option>span:nth-child(2){flex:1;min-width:0}
+.phone-row b,.phone-2 .source-option b{display:block;font-size:16px!important;font-weight:500!important}
+.phone-row small,.phone-2 .source-option small{display:block;font-size:14px!important;color:var(--muted)!important;margin-top:2px}
+.phone-row>.material-symbols-rounded,.phone-2 .source-option>.material-symbols-rounded{font-size:24px!important;color:var(--muted)!important}
+/* Library */
+.phone-2 body[data-route=library] .phone-library{display:block;margin:0 0 32px}
+.phone-2 body[data-route=library] #phone-add-files{display:inline-flex}
+.phone-2 .phone-library h3{font-size:18px;font-weight:600;margin:16px 0 4px}
+.phone-2 .library-tools>button{display:none!important}
+/* Radio: station rows */
+.phone-2 .radio-stations{display:flex!important;flex-direction:column;gap:8px}
+.phone-2 .radio-stations button{display:grid!important;grid-template-columns:48px 1fr auto;grid-template-rows:auto auto;column-gap:12px;align-items:center;text-align:left;min-height:76px;padding:12px 8px 12px 12px!important;border-radius:8px!important;background:none!important;border:1px solid transparent!important;box-shadow:none!important}
+.phone-2 .radio-stations button>span{grid-row:1/3;width:48px;height:48px;border-radius:6px;background:var(--surface-hover);display:grid!important;place-items:center;font-size:24px!important;margin:0!important}
+.phone-2 .radio-stations button b{font-size:16px;font-weight:600}
+.phone-2 .radio-stations button small{grid-column:2;font-size:14px;color:var(--muted)}
+.phone-2 .radio-stations button em{grid-column:3;grid-row:1/3;font-style:normal;font-size:14px;font-weight:600;color:var(--text)!important;border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.phone-2 .radio-stations button[aria-pressed=true],.phone-2 .radio-stations button.playing{background:var(--surface-raised)!important;border-color:var(--line)!important}
+.phone-2 #radio-status{font-size:14px;color:var(--muted)}
+/* Dialogs become full pages on phone (album, settings, sources). */
+.phone-2 dialog#dialog{inset:0!important;margin:0!important;width:100vw!important;max-width:none!important;height:100dvh!important;max-height:none!important;border-radius:0!important;border:0!important;padding:calc(var(--safe-top) + 64px) 16px calc(var(--safe-bottom) + 24px)!important;background:var(--bg)!important}
+.phone-2 dialog#dialog>.close{position:fixed!important;top:calc(var(--safe-top) + 8px);right:8px;width:48px;height:48px}
+.phone-2 #dialog-content>h2,.phone-2 #dialog-content h2{font-size:32px!important;line-height:36px;font-weight:700;letter-spacing:0}
+.phone-2 #dialog-content>p:first-of-type{font-size:16px;color:var(--muted)}
+.phone-2 .source-options{gap:0!important;margin:16px 0!important}
+/* Album page */
+.phone-2 .album-detail{display:grid!important;grid-template-columns:144px 1fr;column-gap:16px;align-items:end}
+.phone-2 .album-detail .album-cover.large{grid-row:1/4;width:144px!important;height:144px!important;margin:0!important}
+.phone-2 .album-detail .eyebrow{display:block!important;grid-column:2;font-size:14px!important;letter-spacing:0!important;text-transform:none;color:var(--muted)!important}
+.phone-2 .album-detail h2{grid-column:2;font-size:24px!important;line-height:28px!important;margin:4px 0!important}
+.phone-2 .album-detail .album-artist{grid-column:2;font-size:16px;margin:0}
+.phone-2 .album-detail .album-actions{grid-column:1/3;display:flex!important;flex-wrap:wrap;gap:12px;margin:16px 0 0}
+.phone-2 .album-detail .album-actions .primary{flex:1 1 100%}
+.phone-2 .album-detail .album-actions .secondary{min-height:48px;border-radius:6px!important;border:1px solid var(--line)!important;background:none!important;padding:0 20px}
+.phone-2 .album-detail .store-link{align-self:center;font-size:14px;color:var(--muted)!important}
+.phone-2 .album-detail details{grid-column:1/3;margin:8px 0}
+.phone-2 .album-detail details summary{min-height:44px;font-size:14px;color:var(--muted)}
+/* Track rows in albums: 64 px, small play control instead of big circles */
+.phone-2 #dialog .catalog-track,.phone-2 #dialog .track{min-height:64px;border-bottom:0!important;padding:8px 0!important}
+.phone-2 #dialog .catalog-track button:last-child,.phone-2 #dialog .track-play{width:44px!important;height:44px!important;min-width:44px;border:0!important;background:none!important;box-shadow:none!important}
+/* Mini player: surface card, white circle play, no expand icon, no readout pill */
+.phone-2 .player{background:var(--surface-raised)!important;border:0!important;border-radius:8px!important;box-shadow:0 8px 24px #0006!important}
+.phone-2 #expand-player,.phone-2 .player #quality{display:none!important}
+.phone-2 .player .now{cursor:pointer}
+.phone-2 .player .play{width:48px!important;height:48px!important;border-radius:50%!important;background:var(--text)!important;color:var(--bg)!important}
+.phone-2 .player #now-title{font-size:16px;font-weight:600}
+.phone-2 .player #now-artist{font-size:14px;color:var(--muted)!important}
+/* Bottom nav: filled pill + bold label marks the current page */
+.phone-2 .sidebar nav button{color:var(--muted)!important;font-size:13px!important;font-weight:500}
+.phone-2 .sidebar nav button .material-symbols-rounded{display:grid;place-items:center;width:56px;height:28px;border-radius:999px;margin:0 auto 2px}
+.phone-2 .sidebar nav button.active{color:var(--text)!important;font-weight:700;background:none!important}
+.phone-2 .sidebar nav button.active .material-symbols-rounded{background:var(--surface-hover)}
+/* Now Playing */
+.phone-2 #now-playing .np-header>span{font-size:14px!important;letter-spacing:0!important;text-transform:none!important;color:var(--muted)!important}
+.phone-2 #np-quality{border-radius:4px!important;background:var(--surface-hover)!important;border:0!important;font-size:13px!important;font-weight:600;padding:2px 8px!important}
+.phone-2 #np-play{background:var(--text)!important;color:var(--bg)!important}
+.phone-2 .np-tools button{flex-direction:row!important;gap:8px;min-height:48px;font-size:16px;font-weight:600}
+/* fixes after first phone pass */
+.phone-2 body[data-route=home] .album-library{display:none!important}
+.phone-2 body[data-route=search] .album-library>.section-heading,.phone-2 body[data-route=search] #saved-albums,.phone-2 body[data-route=search] .lower,.phone-2 .catalog-chips{display:none!important}
+.phone-2 #phone-search .searchbox input:focus-visible{outline:none!important}
+.phone-2 #home-main{display:flex;flex-direction:column}
+.phone-2 #spotify-library{order:10}
+.phone-2 #dialog .source-option,.phone-2 #dialog .source-option:hover{background:none!important;border:0!important;box-shadow:none!important}
+.phone-2 .settings-footnote{display:none}
+.phone-2 .radio-stations button em{font-size:0!important;width:48px;height:48px;padding:0!important;border:0!important;border-radius:50%!important;background:var(--surface-hover);display:grid!important;place-items:center}
+.phone-2 .radio-stations button em::before{content:'play_arrow';font-family:'Material Symbols Rounded';font-size:28px;color:var(--text)}
+.phone-empty{display:none;padding:24px 0}
+.phone-empty>.material-symbols-rounded{font-size:32px;color:var(--muted)}
+.phone-empty b{display:block;font-size:18px;font-weight:600;margin:12px 0 8px}
+.phone-empty p{font-size:15px;line-height:1.4;color:var(--muted);margin:0 0 16px;max-width:340px}
+.phone-2 body[data-route=home]:has(#welcome[hidden]):has(#recent-grid:empty) #phone-home-empty{display:block}
+}

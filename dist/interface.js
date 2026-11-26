@@ -4,7 +4,7 @@
   const body=document.body, home=$('#home-main'), shelf=$('.album-library'), listening=$('#listening-home'), lower=$('.lower');
   const icon=name=>`<span class="material-symbols-rounded" aria-hidden="true">${name}</span>`;
   const navigation=[];let cursor=-1,route='home';
-  const titles={home:'Home',search:'Search',library:'Your library',liked:'Liked tracks',radio:'Radio',open:'Open albums',sources:'External sources'};
+  const titles={home:'Home',search:'Search',library:'Library',liked:'Liked tracks',radio:'Radio',open:'Open albums',sources:'External sources'};
   const originalViews=new Map([...document.querySelectorAll('[data-view]')].map(b=>[b,b.onclick]));
   const originalCategories=new Map([...document.querySelectorAll('[data-category]')].map(b=>[b,b.onclick]));
   const sourceActions=new Map(['external-sources','music-addons','debrid-source','connect','local'].map(id=>[id,$('#'+id).onclick]));
@@ -144,7 +144,7 @@
   }
   $('#sources-menu').onclick=sources;$('#sidebar-add').onclick=sources;sourceButton.onclick=sources;
   function settingsMenu(){
-    modal(`<h2>Settings</h2><p>Settle into your sound.</p><div class="source-options compact-options"><button class="source-option" id="setting-stream">${icon('settings_input_antenna')}<span><b>Streaming quality</b><small>Adaptive, FLAC and non-debrid HiFi</small></span>${icon('chevron_right')}</button><button class="source-option" id="setting-audio">${icon('speaker')}<span><b>Audio settings</b><small>Playback path and sleep timer</small></span>${icon('chevron_right')}</button><button class="source-option" id="setting-eq">${icon('tune')}<span><b>Equalizer</b><small>Shape your sound</small></span>${icon('chevron_right')}</button><button class="source-option" id="setting-flow">${icon('playlist_play')}<span><b>Autoplay</b><small>Album queue and related artists</small></span>${icon('chevron_right')}</button><button class="source-option" id="setting-theme">${icon('palette')}<span><b>Appearance</b><small>Choose your color theme</small></span>${icon('chevron_right')}</button></div><p class="settings-footnote">Oktawka · Music, in full.<br>Listening history stays on this device.</p>`);
+    modal(`<h2>Settings</h2><div class="source-options compact-options"><button class="source-option" id="setting-stream">${icon('settings_input_antenna')}<span><b>Streaming quality</b><small>Adaptive, FLAC and non-debrid HiFi</small></span>${icon('chevron_right')}</button><button class="source-option" id="setting-audio">${icon('speaker')}<span><b>Audio settings</b><small>Playback path and sleep timer</small></span>${icon('chevron_right')}</button><button class="source-option" id="setting-eq">${icon('tune')}<span><b>Equalizer</b><small>Shape your sound</small></span>${icon('chevron_right')}</button><button class="source-option" id="setting-flow">${icon('playlist_play')}<span><b>Autoplay</b><small>Album queue and related artists</small></span>${icon('chevron_right')}</button><button class="source-option" id="setting-theme">${icon('palette')}<span><b>Appearance</b><small>Choose your color theme</small></span>${icon('chevron_right')}</button></div><p class="settings-footnote">Oktawka · Music, in full.<br>Listening history stays on this device.</p>`);
     $('#setting-stream').onclick=()=>window.OktawkaStreaming.settings();
     $('#setting-audio').onclick=()=>{ $('#dialog').close();window.OktawkaAudioDetails?.() };
     $('#setting-eq').onclick=()=>{ $('#dialog').close();window.OktawkaEqualizer?.() };
