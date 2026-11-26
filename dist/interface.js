@@ -52,7 +52,7 @@
   $('#search').setAttribute('autocomplete','off');
   $('#sources-menu').setAttribute('aria-label','Add music');
   document.querySelectorAll('.material-symbols-rounded').forEach(n=>n.setAttribute('aria-hidden','true'));
-  library.setAttribute('aria-label','Your library');
+  library.setAttribute('aria-label','Library');
   nav.querySelector('[data-category="open"]').setAttribute('aria-label','Open albums');
   nav.querySelector('[data-category="radio"]').setAttribute('aria-label','Radio');
   $('#search').setAttribute('aria-label','Search songs, albums, or artists');
@@ -62,17 +62,21 @@
   $('.logo').onclick=e=>{e.preventDefault();navigate('home')};
 
   const welcome=document.createElement('section');welcome.id='welcome';welcome.className='welcome';
-  welcome.innerHTML=`<div class="welcome-icon">${icon('headphones')}</div><div><h2>Pick something good.</h2><p>Your albums, your favorites, a little discovery.</p><div class="welcome-actions"><button class="primary" id="welcome-add">Add music</button><button id="welcome-radio">Explore radio ${icon('arrow_forward')}</button></div></div>`;
+  // First run: the app can't stream albums until a debrid account is connected, so that is the one primary action.
+  welcome.innerHTML=`<div><h2>Connect an account to stream full albums</h2><p>Oktawka plays from your own Real-Debrid or AllDebrid account. It doesn’t come with one.</p><div class="welcome-actions"><button class="primary" id="welcome-add">Connect account</button></div><p class="note">You approve access on Real-Debrid’s or AllDebrid’s own site.</p><h3>Play now, no account needed</h3><div class="source-options compact-options"><button class="source-option" id="welcome-local">${icon('folder_open')}<span><b>Files on this device</b><small>FLAC, WAV and MP3</small></span>${icon('chevron_right')}</button><button class="source-option" id="welcome-radio">${icon('radio')}<span><b>Radio Paradise</b><small>4 live mixes in FLAC</small></span>${icon('chevron_right')}</button><button class="source-option" id="welcome-open">${icon('album')}<span><b>Open albums</b><small>Public FLAC recordings, Internet Archive</small></span>${icon('chevron_right')}</button></div></div>`;
   listening.prepend(welcome);
-  $('#welcome-add').onclick=sources;
+  $('#welcome-add').onclick=()=>chooseSource('debrid-source');
+  $('#welcome-local').onclick=()=>chooseSource('local');
   $('#welcome-radio').onclick=()=>navigate('radio');
+  $('#welcome-open').onclick=()=>navigate('open');
+  document.addEventListener('oktawka:debrid',()=>updateHistory());
   const more=document.createElement('button');more.id='shelf-more';more.textContent='Browse all';more.onclick=()=>navigate('search',{focus:true});shelf.querySelector('.section-heading').append(more);
   const recentHeading=$('#recent-grid').previousElementSibling;
   const recommendationHeading=$('#recommendations').previousElementSibling;
   function updateHistory(){
     const hasRecent=$('#recent-grid').childElementCount>0;
     const hasRecommendations=$('#recommendations').childElementCount>0;
-    welcome.hidden=hasRecent;
+    welcome.hidden=Boolean(window.monoHasDebrid?.());
     recentHeading.hidden=!hasRecent;
     $('#recent-grid').hidden=!hasRecent;
     recommendationHeading.hidden=!hasRecommendations;
@@ -128,9 +132,8 @@
   setView=v=>navigate(({discover:'home',search:'search',library:'library',liked:'liked'})[v]||'home');
   function chooseSource(id){$('#dialog').close();if(id==='external-sources'){navigate('sources');$('#home-music-query').focus();return}sourceActions.get(id)?.();}
   function sources(){
-    modal(`<h2>Add music</h2><p>Make room for your favorites.</p><div class="source-options compact-options"><button class="source-option" id="setting-stream">${icon('settings_input_antenna')}<span><b>Streaming quality</b><small>Adaptive, FLAC and non-debrid HiFi</small></span>${icon('chevron_right')}</button><button class="source-option" data-source="local">${icon('folder_open')}<span><b>Music from your device</b><small>FLAC and other audio files</small></span>${icon('chevron_right')}</button><button class="source-option" id="source-playlists">${icon('playlist_add')}<span><b>Import a playlist</b><small>CSV or JSON track lists</small></span>${icon('chevron_right')}</button><button class="source-option" data-source="connect">${icon('link')}<span><b>Connect a source</b><small>Direct stream, AllDebrid, or Real-Debrid</small></span>${icon('chevron_right')}</button></div><details class="advanced-sources"><summary>Advanced sources</summary><div class="source-options"><button class="source-option" data-source="external-sources">${icon('travel_explore')}<span><b>External releases</b><small>Search audio sources</small></span>${icon('chevron_right')}</button><button class="source-option" data-source="music-addons">${icon('cloud')}<span><b>Cloud music & add-ons</b><small>Manage connected catalogs</small></span>${icon('chevron_right')}</button></div></details>`);
+    modal(`<h2>Add music</h2><p>Make room for your favorites.</p><div class="source-options compact-options"><button class="source-option" data-source="local">${icon('folder_open')}<span><b>Music from your device</b><small>FLAC and other audio files</small></span>${icon('chevron_right')}</button><button class="source-option" id="source-playlists">${icon('playlist_add')}<span><b>Import a playlist</b><small>CSV or JSON track lists</small></span>${icon('chevron_right')}</button><button class="source-option" data-source="connect">${icon('link')}<span><b>Connect a source</b><small>Direct stream, AllDebrid, or Real-Debrid</small></span>${icon('chevron_right')}</button></div><details class="advanced-sources"><summary>Advanced sources</summary><div class="source-options"><button class="source-option" data-source="external-sources">${icon('travel_explore')}<span><b>External releases</b><small>Search audio sources</small></span>${icon('chevron_right')}</button><button class="source-option" data-source="music-addons">${icon('cloud')}<span><b>Cloud music & add-ons</b><small>Manage connected catalogs</small></span>${icon('chevron_right')}</button></div></details>`);
     $('#dialog-content').querySelectorAll('[data-source]').forEach(b=>b.onclick=()=>chooseSource(b.dataset.source));
-    $('#setting-stream').onclick=()=>window.OktawkaStreaming.settings();
     const openMusic=document.createElement('button');openMusic.className='source-option';openMusic.innerHTML=icon('album')+'<span><b>Open albums</b><small>Public FLAC recordings</small></span>'+icon('chevron_right');openMusic.onclick=()=>{$('#dialog').close();navigate('open')};$('#source-playlists').before(openMusic);
     $('#source-playlists').onclick=()=>{ $('#dialog').close();importAction() };
     if(window.OktawkaSpotify){

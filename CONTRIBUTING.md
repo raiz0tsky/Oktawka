@@ -14,6 +14,6 @@ Keep provider keys, OAuth tokens, `.env` files, signing keys and listening data 
 
 Review UI at 320, 390, 768 and 1440 CSS pixels, portrait and landscape. Check search, album popup playback, queue, lyrics, keyboard navigation, zoom and theme contrast. Test top/bottom safe areas on a real phone; browser previews do not establish Android WebView status-bar behavior.
 
-The Android wrapper now bundles the current UI for review. A release APK needs updated bundled assets, native window-inset checks, real-device playback checks and a private release signing key. Do not commit a signing key.
+The Android wrapper now bundles the current UI for review. `android/assets/` is generated, not committed: `node android/tools/prepare.mjs` copies `dist/` and builds `android-provider.js` from `worker/`. `scripts/check.mjs` and `android/build.sh` run it for you. A release APK needs updated bundled assets, native window-inset checks, real-device playback checks and a private release signing key. Do not commit a signing key.
 
 Hosting: `.openai/hosting.json` is ignored and stays local. New clones build with the empty example manifest. Configure your own hosting identity when deploying. The private review deployment may include a locally built APK download; CI without the Android build omits that optional asset.

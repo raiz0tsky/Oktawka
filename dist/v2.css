@@ -34,3 +34,18 @@ button:disabled,.primary:disabled{cursor:not-allowed}
 [data-theme=charcoal] :is(.logo .brand-mark,.history-card>.material-symbols-rounded,.radio-stations button>span,.source-option>.material-symbols-rounded:first-child,.source-icon,.np-artwork .material-symbols-rounded,.spotify-intro>.material-symbols-rounded,.spotify-permissions>.material-symbols-rounded,.spotify-sync-options label>.material-symbols-rounded){color:var(--muted)!important;border-color:var(--muted)}
 [data-theme=charcoal] :is(.cloud-file>span:last-child,.source-back,.key-dashboard,.store-link,.spotify-setup a,.radio-stations em){color:var(--text)!important}
 [data-theme=charcoal] #volume{accent-color:var(--text)}
+
+/* Phase 2: first-run Home. One focal point (the connect prompt), plain rows below. No card, no gradient. */
+#welcome.welcome{display:block!important;background:none!important;padding:8px 0 0!important;margin:0 0 32px!important;border-radius:0;box-shadow:none;max-width:640px}
+#welcome h2{font-size:clamp(28px,6vw,36px)!important;line-height:1.12;font-weight:700;letter-spacing:0;margin:0 0 12px}
+#welcome>div>p{font-size:16px!important;line-height:1.4;color:var(--muted);margin:0 0 16px}
+#welcome .welcome-actions .primary{width:100%;max-width:360px}
+#welcome .note{font-size:14px!important;margin:12px 0 32px!important}
+#welcome h3{font-size:18px;font-weight:600;margin:0 0 4px}
+#welcome .source-options{margin:0;gap:0}
+#welcome .source-option{background:none!important;border:0!important;border-radius:6px;min-height:64px;padding:0 8px 0 4px}
+#welcome .source-option:hover{background:var(--surface-hover)!important}
+#welcome .source-option b{font-size:16px;font-weight:600}
+#welcome .source-option small{font-size:14px;color:var(--muted)}
+/* Desktop has Settings in the sidebar, so the header gear is a duplicate there. */
+@media(min-width:601px){#profile{display:none!important}}
