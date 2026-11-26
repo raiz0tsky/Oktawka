@@ -166,7 +166,7 @@ The server build targets a Worker-compatible host. GitHub Pages alone cannot run
 - [ ] Verified screen-off / background playback and lock-screen controls
 - [ ] Real-Debrid automatic album matching (parity with AllDebrid)
 - [ ] Measured battery and CPU use
-- [ ] Signed Android release
+- [x] Signed Android release (1.2.0)
 - [ ] Public hosted web version
 
 ## 🔒 Privacy

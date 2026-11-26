@@ -79,5 +79,6 @@ Last updated 2026-11-26. ✅ verified (evidence given) · ❌ failed · ⏳ not 
 ## Delivery
 
 ⏳ Desktop preview: run `node scripts/build-worker.mjs`, then serve `build/dist/server/index.js` (see CONTRIBUTING). Not hosted publicly.
-❌ Signed Android review APK for update: **blocked**. The original review key (cert SHA-256 `fd9aca5a…3e0e1d56`) is not in this environment. A build signed with any other key cannot install over the current review app. `build.sh` now refuses to silently create a new key.
+✅ Signed Android release: 1.2.0 (versionCode 3) is release-signed and published on GitHub with `SHA256SUMS`. APK SHA-256 `0d231787abdcaf6f1ce68d1ffddfaba29344f6fc752e455d07134d25c7c13389`. New release key (cert SHA-256 `c2fbc5115e1ace50bea8b7d104a9ed700c8758194f992131e6e53b71957fe2ed`), so it cannot install over the old review build: uninstall that first. The key is not in the repo. `build.sh` refuses to create a new key unless `OKTAWKA_NEW_DEV_KEY=1`.
+⏳ The 1.2.0 APK on a real phone: not tested.
 ⏳ Windows package: not started.
