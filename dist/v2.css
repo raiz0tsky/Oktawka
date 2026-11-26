@@ -171,4 +171,51 @@ button:disabled,.primary:disabled{cursor:not-allowed}
 .phone-empty b{display:block;font-size:18px;font-weight:600;margin:12px 0 8px}
 .phone-empty p{font-size:15px;line-height:1.4;color:var(--muted);margin:0 0 16px;max-width:340px}
 .phone-2 body[data-route=home]:has(#welcome[hidden]):has(#recent-grid:empty) #phone-home-empty{display:block}
+/* pass 3: match Penpot screens closer */
+.phone-2 #welcome h2{font-size:32px!important;line-height:36px}
+/* Mini player empty: no dead controls */
+.phone-2 .player:has(#expand-player:disabled) #play{display:none!important}
+.phone-2 .player #now-artist{font-size:14px!important}
+.phone-2 .player .mini-art{width:48px!important;height:48px!important;border-radius:4px!important}
+/* Library: list first; sections open as sub-pages */
+#phone-lib-back{display:none}
+.phone-2 body[data-route=library] :where(.album-library,.lower,#spotify-library){display:none!important}
+.phone-2 body[data-route=library][data-lib-view] .phone-library,.phone-2 body[data-route=library][data-lib-view] #phone-add-files{display:none!important}
+.phone-2 body[data-route=library][data-lib-view=saved] .album-library,.phone-2 body[data-route=library][data-lib-view=device] .lower,.phone-2 body[data-route=library][data-lib-view=playlists] #spotify-library{display:block!important}
+.phone-2 body[data-route=library][data-lib-view] #phone-lib-back{display:inline-flex;margin:0 0 0 -8px}
+.phone-2 body[data-route=library][data-lib-view] .album-library>.section-heading,.phone-2 body[data-route=library][data-lib-view] .lower .section-heading h2{display:none!important}
+/* Radio */
+.phone-intro{font-size:16px;line-height:1.4;color:var(--muted);margin:0 0 16px}
+.phone-2 .radio-stations button.phone-playing{background:var(--surface-raised)!important;border-color:var(--line)!important}
+.phone-2 .radio-stations button.phone-playing b{color:var(--action)}
+.phone-2 .radio-stations button.phone-playing em{background:var(--text)}
+.phone-2 .radio-stations button.phone-playing em::before{content:'pause';color:var(--bg)}
+/* Dialog back control (top left), Save on the album page (top right) */
+.phone-2 dialog#dialog>.close{left:8px!important;right:auto!important;width:auto!important;display:inline-flex!important;align-items:center;gap:8px;padding:0 16px 0 8px!important;font-size:16px!important;font-weight:600;background:none!important;border:0!important;color:var(--text)!important}
+.phone-2 dialog#dialog>.close .material-symbols-rounded{font-size:24px}
+.phone-2 #dialog-content>.settings-group,.phone-2 #dialog .settings-group{font-size:18px;font-weight:600;margin:16px 0 0}
+.phone-2 #dialog .settings-group+.source-options{margin-top:4px!important}
+.phone-2 .album-detail .eyebrow{display:none!important}
+.phone-2 .album-detail #save-album{position:fixed;top:calc(var(--safe-top) + 8px);right:8px;min-height:48px;border:0!important;background:none!important;font-size:16px;font-weight:600}
+.phone-2 .album-detail #album-find-sources .material-symbols-rounded{display:none}
+.phone-2 .album-detail .album-actions{margin-top:16px!important}
+.phone-2 .album-detail .album-cover.large{grid-row:1/5}
+/* Album tracks: Body 16 titles, numbers muted, no repeated artist line */
+.phone-2 #dialog .catalog-track{display:flex!important;align-items:center;gap:12px}
+.phone-2 #dialog .catalog-track b,.phone-2 #dialog .catalog-track strong{font-size:16px!important;font-weight:500}
+.phone-2 #dialog .catalog-track small{display:none!important}
+/* Now Playing */
+.phone-2 #np-close{width:auto!important;display:inline-flex!important;align-items:center;gap:4px;padding:0 12px 0 4px!important;border-radius:6px!important;background:none!important;font-size:16px;font-weight:600}
+.phone-2 #np-share{background:none!important}
+.phone-2 #np-info{background:none!important}
+.phone-2 .np-artwork{width:100%!important;max-width:358px!important;margin:8px auto 16px!important}
+.phone-2 #np-title{font-size:24px!important;line-height:28px;font-weight:700}
+.phone-2 #np-artist{font-size:16px!important;color:var(--muted)!important}
+.phone-2 .np-tools{border:0!important;justify-content:space-between}
+.phone-2 #np-lyrics{order:1}.phone-2 #np-queue{order:2}.phone-2 #np-eq{order:3}
+.phone-2 :is(#np-artist,#np-like,#np-quality,#np-retry-lyrics){min-height:44px!important}
+.phone-2 #np-like,.phone-2 #np-retry-lyrics{min-width:44px!important}
+.phone-2 body[data-lib-view=saved] .catalog-modes{display:none!important}
+.phone-2 body[data-lib-view=saved] #catalog-status{font-size:16px;line-height:1.4;color:var(--muted);padding:24px 0}
+.phone-2 #np-quality{background:none!important;color:var(--muted)!important}
 }
