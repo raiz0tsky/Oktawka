@@ -110,7 +110,7 @@ Debrid services resolve sources. They are not music catalogs, so a catalog entry
 
 ## 📲 Get Oktawka
 
-**Android (sideload preview).** Download the APK from [Releases](../../releases) and check it against the attached `SHA256SUMS`. You need Android 8.0 or later and an up-to-date Android System WebView. This is a development-signed review build, not a Play Store release.
+**Android (sideload preview).** Download the APK from [Releases](../../releases) and check it against the attached `SHA256SUMS`. You need Android 8.0 or later and an up-to-date Android System WebView. Current version: **1.2.0**, release-signed. It is not on the Play Store. If you installed the 1.1.0 review build, uninstall it first (different signing key).
 
 **Web / desktop preview.** Build and run it locally (see [Development](#%EF%B8%8F-development)). A public hosted version is planned.
 

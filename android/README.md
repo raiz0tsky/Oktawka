@@ -12,7 +12,7 @@ Install JDK 17+, Node 20+, Android SDK platform 35 and build-tools 35.0.0, then 
 ANDROID_SDK_ROOT=/path/to/android-sdk ./android/build.sh
 ```
 
-Output: `android/build/Oktawka-1.1.0-review.apk`. The default build uses a development signing certificate generated outside the repository at `$HOME/.oktawka-signing/debug.keystore (override with OKTAWKA_DEV_KEYSTORE)`; preserve it securely for compatible updates. It is not a Play Store production signing identity. For release signing, set `OKTAWKA_KEYSTORE` to your own keystore; apksigner prompts for its password. Never commit signing keys. VersionCode must increase for subsequent releases.
+Output: `android/build/Oktawka-1.2.0.apk`. The default build uses a development signing certificate generated outside the repository at `$HOME/.oktawka-signing/debug.keystore (override with OKTAWKA_DEV_KEYSTORE)`; preserve it securely for compatible updates. It is not a Play Store production signing identity. For release signing, set `OKTAWKA_KEYSTORE` to your own keystore; apksigner prompts for its password. Never commit signing keys. VersionCode must increase for subsequent releases.
 
 ## Install
 

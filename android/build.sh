@@ -27,9 +27,9 @@ if [[ -z "${OKTAWKA_KEYSTORE:-}" ]]; then
     keytool -genkeypair -keystore "$keyfile" -storepass android -keypass android -alias androiddebugkey -dname 'CN=Oktawka Development' -keyalg RSA -keysize 2048 -validity 10000 >/dev/null 2>&1
     chmod 600 "$keyfile"
   fi
-  "$tools/apksigner" sign --ks "$keyfile" --ks-pass pass:android --key-pass pass:android --ks-key-alias androiddebugkey --out android/build/Oktawka-1.1.0-review.apk android/build/aligned.apk
+  "$tools/apksigner" sign --ks "$keyfile" --ks-pass pass:android --key-pass pass:android --ks-key-alias androiddebugkey --out android/build/Oktawka-1.2.0.apk android/build/aligned.apk
 else
-  "$tools/apksigner" sign --ks "$OKTAWKA_KEYSTORE" --out android/build/Oktawka-1.1.0-review.apk android/build/aligned.apk
+  "$tools/apksigner" sign --ks "$OKTAWKA_KEYSTORE" --out android/build/Oktawka-1.2.0.apk android/build/aligned.apk
 fi
-"$tools/apksigner" verify --verbose android/build/Oktawka-1.1.0-review.apk
-"$tools/aapt2" dump badging android/build/Oktawka-1.1.0-review.apk | head -8
+"$tools/apksigner" verify --verbose android/build/Oktawka-1.2.0.apk
+"$tools/aapt2" dump badging android/build/Oktawka-1.2.0.apk | head -8
